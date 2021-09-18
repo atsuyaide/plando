@@ -16,7 +16,8 @@
   <body data-turbolinks="false">
     <%= render 'layouts/navbar' %>
 
-    <div class="container">
+    <%# container-fluidでwidth-100%のcontainerを作成 %>
+    <div class="container-fluid">
       <%= render 'layouts/flash_messages' %>
 
       <%= yield %>
