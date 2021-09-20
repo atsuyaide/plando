@@ -12,7 +12,11 @@
         <% users.each_with_index do |user, idx| %>
           <tr>
             <th scope="row"><%= idx + 1 %></th>
+            <% if current_user.id == user.id %>
             <td><%= link_to user.name, user_path(user) %></td>
+            <% else %>
+            <td><%= user.name %></td>
+            <% end %>
             <td><%= user.email %></td>
           </tr>
         <% end %>
