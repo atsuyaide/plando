@@ -1,9 +1,16 @@
 class UsersController < ApplicationController
+  before_action :require_user_logged_in, only: [:index, :show]
+  
   def index
     @pagy, @users = pagy(User.order(id: :desc), items: 10)
   end
 
   def show
+    unless current_user.id.to_s == params[:id]
+      puts 'abc'
+      flash[:danger] = '他ユーザーのページにはアクセスできません。'
+      redirect_to user_path(current_user.id)
+    end
     @user = User.find(params[:id])
   end
 
