@@ -7,4 +7,7 @@ Rails.application.routes.draw do
   
   get 'signup', to: 'users#new'
   resources :users, only: [:index, :show, :create]
+  
+  # チームは作成と削除が可能
+  resources :teams, only: [:index, :show, :create, :destroy]
 end
