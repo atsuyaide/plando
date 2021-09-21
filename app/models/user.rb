@@ -12,4 +12,22 @@ class User < ApplicationRecord
   has_secure_password
   
   has_many :teams
+  
+  # users -> teams: 所属チーム
+  has_many :user_teams
+  has_many :teams, through: :user_teams, source: :team
+  
+  # 機能するけど、今回のアプリケーションでは使わないのでとりあえずコメントアウト
+  # def join_team(team)
+  #   self.user_teams.find_or_create_by(team_id: team.id)
+  # end
+  # 
+  # def withdraw_team(team)
+  #   user_team = self.user_teams.find_by(team_id: team.id)
+  #   user_team.destroy if user_team
+  # end
+  # 
+  # def joinning?(team)
+  #   self.teams.include?(team)
+  # end
 end
