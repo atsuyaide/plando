@@ -1,27 +1,27 @@
 <% if users.any? %>
-  <ul class="list-unstyled">
-    <table class="table table-striped" style="table-layout:fixed;width:100%;">
-      <thead>
+  <table class="table table-striped" style="table-layout:fixed;width:100%;max-width:768px;" align="center">
+    <thead>
+      <tr>
+        <th style="width: 5%" scope="col">#</th>
+        <th style="width: 25%" scope="col">Username</th>
+        <th style="width: 70%" scope="col">E-mail</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.each_with_index do |user, idx| %>
         <tr>
-          <th style="width: 5%" scope="col">#</th>
-          <th style="width: 15%" scope="col">Username</th>
-          <th style="width: 80%" scope="col">E-mail</th>
+          <th scope="row"><%= idx + 1 %></th>
+          <% if current_user.id == user.id %>
+          <td><%= link_to user.name, user_path(user) %></td>
+          <% else %>
+          <td><%= user.name %></td>
+          <% end %>
+          <td><%= user.email %></td>
         </tr>
-      </thead>
-      <tbody>
-        <% users.each_with_index do |user, idx| %>
-          <tr>
-            <th scope="row"><%= idx + 1 %></th>
-            <% if current_user.id == user.id %>
-            <td><%= link_to user.name, user_path(user) %></td>
-            <% else %>
-            <td><%= user.name %></td>
-            <% end %>
-            <td><%= user.email %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </ul>
-  <%== pagy_bootstrap_nav(@pagy) %>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-center">
+    <%== pagy_bootstrap_nav(@pagy) %>
+  </div>
 <% end %>

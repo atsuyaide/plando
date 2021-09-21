@@ -8,4 +8,12 @@ module ApplicationHelper
   def logged_in?
     !!current_user
   end
+  
+  def active_page?(path)
+    if request.path == path
+      return 'active'
+    else
+      return ''
+    end
+  end
 end
