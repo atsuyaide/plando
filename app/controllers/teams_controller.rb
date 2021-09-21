@@ -7,6 +7,7 @@ class TeamsController < ApplicationController
   
   def show
     @team = Team.find(params[:id])
+    @pagy, @users = pagy(@team.members, items: 10)
   end
 
   def create
