@@ -6,8 +6,9 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-N = 3
-M = 10
+N = 11
+M = 5
+K = 100
 
 (1..N).each do |number|
   number_s = number.to_s
@@ -15,12 +16,16 @@ M = 10
   user.save
 end
   
-(1..N).each do |id|
-  user = User.find(id)
+(1..N*M).each do |num|
+  user = User.find(rand(1..N))
   # teamを作成
-  (1..M).each do |num|
-    num_s = num.to_s
-    team = user.teams.build(name: user.name + '_' + num_s, description: 'ここにちーむの説明が入ります。' + num_s)
-    team.save
-  end
+  num_s = num.to_s
+  team = user.teams.build(name: 'team-' + user.name + '_' + num_s, description: 'ここにちーむの説明が入ります。' + num_s)
+  team.save
+  team.add_member(user)
+end
+
+(1..K).each do |_|
+  team = Team.find(rand(1..N*M))
+  team.add_member(User.find(rand(1..N)))
 end

@@ -4,7 +4,8 @@
       <tr>
         <th style="width: 5%" scope="col">#</th>
         <th style="width: 25%" scope="col">Name</th>
-        <th style="width: 70%" scope="col">E-mail</th>
+        <th style="width: 50%" scope="col">E-mail</th>
+        <th style="width: 20%" scope="col"></th>
       </tr>
     </thead>
     <tbody>
@@ -12,11 +13,24 @@
         <tr>
           <th scope="row"><%= idx + 1 %></th>
           <% if current_user.id == user.id %>
-          <td><%= link_to user.name, user_path(user) %></td>
+            <td><%= link_to user.name, user_path(user) %></td>
           <% else %>
-          <td><%= user.name %></td>
+            <td><%= user.name %></td>
           <% end %>
           <td><%= user.email %></td>
+          <td class="text-center">
+            <% unless team.nil? %>
+              <% if team.members.include?(current_user) %>
+                <% unless user == team.user %>
+                  <%= form_with(model: team.user_teams.find_by(user_id: user.id), method: :delete) do |f| %>
+                    <%= hidden_field_tag :user_id, user.id %>
+                    <%= hidden_field_tag :team_id, team.id %>
+                    <%= f.submit 'Remove', class: 'btn btn-danger rounded-pill py-0', data: { confirm: "You sure?" } %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>

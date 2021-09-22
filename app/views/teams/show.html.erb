@@ -4,7 +4,7 @@
   </div>
   <div class="col-4 text-center">
     <% if current_user == @team.user %>
-      <%= link_to "Delete", @team, method: :delete, data: { confirm: "Delete your team?" }, class: 'btn btn-danger btn-sm rounded-pill px-4 py-2' %>
+      <%= link_to "Delete", @team, method: :delete, data: { confirm: "Delete your team?" }, class: 'btn btn-danger rounded-pill py-0' %>
     <% end %>
   </div>
 </div>

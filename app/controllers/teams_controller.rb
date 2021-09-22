@@ -14,6 +14,7 @@ class TeamsController < ApplicationController
     @team = current_user.teams.build(team_params)
     if @team.save
       flash[:success] = 'チームを作成しました。'
+      # @team.add_member(current_user)
       redirect_to root_url
     else
       @pagy, @teams = pagy(current_user.teams.order(id: :desc))
