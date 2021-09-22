@@ -14,9 +14,9 @@ class User < ApplicationRecord
   has_many :teams
   
   # users -> teams: 所属チーム
-  has_many :user_teams
-  has_many :teams, through: :user_teams, source: :team
-  
+  # has_many :user_teams
+  # has_many :allteams, through: :user_teams, source: :team
+  # 
   # 機能するけど、今回のアプリケーションでは使わないのでとりあえずコメントアウト
   # def join_team(team)
   #   self.user_teams.find_or_create_by(team_id: team.id)
@@ -28,6 +28,6 @@ class User < ApplicationRecord
   # end
   # 
   # def joinning?(team)
-  #   self.teams.include?(team)
+  #   self.allteams.include?(team)
   # end
 end
