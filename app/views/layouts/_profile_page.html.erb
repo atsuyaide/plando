@@ -7,28 +7,33 @@
     <div class="tab-pane fade show active" id="nav-about" role="tabpanel" aria-labelledby="nav-home-tab">
       <div class="row">
           <div class="col-sm-4">
-            <div class="card my-1 p-1">
+            <div class="card pt-sm-3 p-2">
               <% unless user.nil? %>
-                <h5>Name</h5>            
-                <div class="card-text text-center"><%= user.name %></div>
-                <h5>E-mail</h5>
-                <div class="card-text text-center"><%= user.email %></div>
+                <p>Name: <%= user.name %></p>
+                <p>E-mail: <%= user.email %></p>
               <% end %>
               <% unless team.nil? %>
-                <h5>Name</h5>            
-                <div class="card-text text-center"><%= team.name %></div>
-                <h5>Owner</h5>            
-                <div class="card-text text-center"><%= team.user.name %></div>
-                <h5>Description</h5>
-                <div class="card-text"><%= team.description %></div>
+                <% puts team.user_teams.build %>
+                <p>Owner: <%= team.user.name %></p>
+                <p>Description<br><%= team.description %></p>
               <% end %>
             </div>
           </div>
           <div class="col-sm-8">
             <% unless user.nil? %>
+              <h2>Teams</h2>
               <%= render 'teams/teams', teams: teams %>
             <% end %>
             <% unless team.nil? %>
+              <h2>Members</h2>
+              <% if team.member?(current_user) %>
+                <%= form_with(model: team.user_teams.build) do |f| %>
+                  <%= f.label :name, 'Username' %>
+                  <%= f.text_field :name, class: 'form-control' %>
+                  <%= hidden_field_tag :team_id, team.id %>
+                  <%= f.submit 'Append', class: 'btn btn-primary w-100' %>
+                <% end %>
+              <% end %>
               <%= render 'users/users', users: users %>
             <% end %>
           </div>

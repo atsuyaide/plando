@@ -10,4 +10,6 @@ Rails.application.routes.draw do
   
   # チームは作成と削除が可能
   resources :teams, only: [:index, :show, :create, :destroy]
+  
+  resources :user_teams, only: [:create, :destroy]
 end

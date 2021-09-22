@@ -13,11 +13,11 @@ class TeamsController < ApplicationController
   def create
     @team = current_user.teams.build(team_params)
     if @team.save
-      flash[:success] = 'メッセージを投稿しました。'
+      flash[:success] = 'チームを作成しました。'
       redirect_to root_url
     else
       @pagy, @teams = pagy(current_user.teams.order(id: :desc))
-      flash.now[:danger] = 'メッセージの投稿に失敗しました。'
+      flash.now[:danger] = 'チームの作成に失敗しました。'
       render 'toppages/index'
     end
   end
