@@ -3,7 +3,7 @@ class Team < ApplicationRecord
   
   validates :name, presence: true, length: { maximum: 20 },
                     uniqueness: { case_sensitive: false }
-  validates :description, presence: true, length: { maximum: 511 }
+  validates :description, length: { maximum: 511 }
   
   # teams -> users: 所属メンバー
   has_many :user_teams

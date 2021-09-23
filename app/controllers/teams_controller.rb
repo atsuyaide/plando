@@ -9,17 +9,20 @@ class TeamsController < ApplicationController
     @team = Team.find(params[:id])
     @pagy, @users = pagy(@team.members, items: 10)
   end
+  
+  def new
+    @team = Team.new
+  end
 
   def create
     @team = current_user.teams.build(team_params)
     if @team.save
       flash[:success] = 'チームを作成しました。'
-      # @team.add_member(current_user)
-      redirect_to root_url
+      @team.add_member(current_user)
+      redirect_to @team
     else
-      @pagy, @teams = pagy(current_user.teams.order(id: :desc))
       flash.now[:danger] = 'チームの作成に失敗しました。'
-      render 'toppages/index'
+      render :new
     end
   end
 
@@ -33,6 +36,6 @@ class TeamsController < ApplicationController
   private
 
   def team_params
-    params.require(:team).permit(:content)
+    params.require(:team).permit(:name, :description)
   end
 end
