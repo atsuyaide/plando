@@ -29,6 +29,4 @@ class UserTeamsController < ApplicationController
     end
     redirect_to team
   end
-  
-  # TODO: ストロングパラメーターを使用する。
 end
