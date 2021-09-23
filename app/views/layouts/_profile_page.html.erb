@@ -32,13 +32,27 @@
               <% end %>
             <% end %>
           </div>
-          <div class="col-sm-8">
+          <div class="col-sm-8 mt-1">
             <% unless user.nil? %>
-              <h2>Teams</h2>
+              <div class="row">
+                <div class="col-6">
+                  <h2>Teams</h2>
+                </div>
+                <div class="col-6">
+                  <%= link_to "Build New Team?", new_team_path, class: "btn btn-primary rounded-pill" %>
+                </div>
+              </div>
               <%= render 'teams/teams', teams: teams %>
             <% end %>
             <% unless team.nil? %>
-              <h2>Members</h2>
+              <div class="row">
+                <div class="col-6">
+                  <h2>Members</h2>
+                </div>
+                <div class="col-6">
+                  <%= link_to "Build New Team?", new_team_path, class: "btn btn-primary rounded-pill" %>
+                </div>
+              </div>
               <%= render 'users/users', users: users, team: team %>
             <% end %>
           </div>
