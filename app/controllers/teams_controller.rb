@@ -2,12 +2,13 @@ class TeamsController < ApplicationController
   before_action :require_user_logged_in
 
   def index
-    @pagy, @teams = pagy(Team.order(id: :desc), items: 10)
+    @pagy_1, @teams = pagy(Team.order(id: :desc), items: 10)
   end
   
   def show
     @team = Team.find(params[:id])
-    @pagy, @users = pagy(@team.members, items: 10)
+    @pagy_1, @users = pagy(@team.members, items: 10)
+    @pagy_2, @tasks = pagy(@team.tasks, items: 10)
   end
   
   def new
@@ -32,7 +33,7 @@ class TeamsController < ApplicationController
     flash[:success] = 'チームを削除しました。'
     redirect_to teams_path
   end
-
+  
   private
 
   def team_params

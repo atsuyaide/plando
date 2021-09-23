@@ -1,25 +1,25 @@
 <% if teams.any? %>
-  <ul class="list-unstyled">
-    <table class="table" style="table-layout:fixed;width:100%;">
-      <thead>
+  <table class="table table-striped" style="table-layout:fixed;width:100%;max-width:768px;" align="center">
+    <thead>
+      <tr>
+        <th style="width: 5%" scope="col">#</th>
+        <th style="width: 25%" scope="col">Name</th>
+        <th style="width: 15%" scope="col">Owner</th>
+        <th style="width: 55%" scope="col">description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% teams.each_with_index do |team, idx| %>
         <tr>
-          <th style="width: 5%" scope="col">#</th>
-          <th style="width: 25%" scope="col">Name</th>
-          <th style="width: 15%" scope="col">Owner</th>
-          <th style="width: 55%" scope="col">description</th>
+          <th scope="row"><%= idx + 1 %></th>
+          <td><%= link_to team.name, team_path(team) %></td>
+          <td><%= team.user.name %></td>
+          <td style="word-wrap:break-word;"><%= team.description %></td>
         </tr>
-      </thead>
-      <tbody>
-        <% teams.each_with_index do |team, idx| %>
-          <tr>
-            <th scope="row"><%= idx + 1 %></th>
-            <td><%= link_to team.name, team_path(team) %></td>
-            <td><%= team.user.name %></td>
-            <td style="word-wrap:break-word;"><%= team.description %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </ul>
-  <%== pagy_bootstrap_nav(@pagy) %>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-center">
+    <%== pagy_bootstrap_nav(@pagy_1) %>
+  </div>
 <% end %>

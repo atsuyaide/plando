@@ -9,6 +9,8 @@ class Team < ApplicationRecord
   has_many :user_teams
   has_many :members, through: :user_teams, source: :user, dependent: :destroy
   
+  has_many :tasks
+  
   def add_member(user)
     self.user_teams.find_or_create_by(user_id: user.id)
   end

@@ -1,7 +1,7 @@
 <div class="row">
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
-    <a class="nav-link active" id="nav-about-tab" data-bs-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">About</a>
-    <a class="nav-link" id="nav-task-tab" data-bs-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Tasks</a>
+    <a class="nav-link active" id="nav-about-tab" data-bs-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-home" aria-selected="true">About</a>
+    <a class="nav-link" id="nav-task-tab" data-bs-toggle="tab" href="#nav-tasks" role="tab" aria-controls="nav-profile" aria-selected="false">Tasks</a>
   </div>
   <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-about" role="tabpanel" aria-labelledby="nav-home-tab">
@@ -23,10 +23,10 @@
                 <div class="m-sm-3 m-2">
                   <%= form_with(model: team.user_teams.build) do |f| %>
                     <div class="mb-2">
-                      <%= f.text_field :name, class: 'form-control', :placeholder => 'username' %>
+                      <%= f.text_field :name, class: "form-control", :placeholder => "username" %>
                       <%= hidden_field_tag :team_id, team.id %>
                     </div>
-                    <%= f.submit 'Add', class: 'btn btn-primary w-100' %>
+                    <%= f.submit "Add", class: "btn btn-primary w-100" %>
                   <% end %>
                 </div>
               <% end %>
@@ -42,7 +42,7 @@
                   <%= link_to "Build New Team?", new_team_path, class: "btn btn-primary rounded-pill" %>
                 </div>
               </div>
-              <%= render 'teams/teams', teams: teams %>
+              <%= render "teams/teams", teams: teams %>
             <% end %>
             <% unless team.nil? %>
               <div class="row">
@@ -53,13 +53,38 @@
                   <%= link_to "Build New Team?", new_team_path, class: "btn btn-primary rounded-pill" %>
                 </div>
               </div>
-              <%= render 'users/users', users: users, team: team %>
+              <%= render "users/users", users: users, team: team %>
             <% end %>
           </div>
       </div>
     </div>
-    <div class="tab-pane fade" id="nav-task" role="tabpanel" aria-labelledby="nav-profile-tab">
-      ...
+    <div class="tab-pane fade" id="nav-tasks" role="tabpanel" aria-labelledby="nav-profile-tab">
+      <div class="row m-sm-3 p-1">
+        <div class="col-sm-4">
+          <% model = user.nil? ? team.tasks.build : user.tasks.build %>
+          <%= form_with(model: model) do |f| %>
+            <div class="mb-2">
+              <div class="mb-3">
+                <%= f.label :title, "title" %>
+                <%= f.text_field :title, class: "form-control", :placeholder => "Title" %>
+              </div>
+              <div class="mb-3">
+                <%= f.label :content, "Description" %>
+                <%= f.text_area :content, class: "form-control", :placeholder => "Description" %>
+              </div>
+              <div class="mb-3">
+                <%= f.label :deadline, "Deadline" %>
+                <%= f.text_field :deadline, class: "form-control", :placeholder => "yyyy-mm-dd HH:MM" %>
+              </div>
+              <%= hidden_field_tag :team_id, team.nil? ? nil : team.id %>
+            </div>
+             <%= f.submit "Add", class: "btn btn-primary w-100" %>
+          <% end %>
+        </div>
+        <div class="col-sm-8">
+          <%= render "tasks/tasks", tasks: @tasks %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

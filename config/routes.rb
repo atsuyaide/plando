@@ -12,4 +12,6 @@ Rails.application.routes.draw do
   resources :teams, only: [:index, :show, :new, :create, :destroy]
   
   resources :user_teams, only: [:create, :destroy]
+  
+  resources :tasks, only: [:edit, :create]
 end
