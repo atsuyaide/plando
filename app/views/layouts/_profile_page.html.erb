@@ -1,6 +1,51 @@
 <div class="row">
-  <ul class="nav nav-tabs mb-3">
-    <li class="nav-item"><a href="#" class="nav-link">About</a></li>
-    <li class="nav-item"><a href="#" class="nav-link">Tasks</a></li>
-  </ul>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-link active" id="nav-about-tab" data-bs-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">About</a>
+    <a class="nav-link" id="nav-task-tab" data-bs-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Tasks</a>
+  </div>
+  <div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-about" role="tabpanel" aria-labelledby="nav-home-tab">
+      <div class="row m-sm-3 p-1">
+          <div class="col-sm-4">
+            <div class="card py-sm-3 pt-sm-1 p-2">
+              <% unless user.nil? %>
+                <p>Name: <%= user.name %></p>
+                <p>E-mail: <%= user.email %></p>
+              <% end %>
+              <% unless team.nil? %>
+                <% puts team.user_teams.build %>
+                <p>Owner: <%= team.user.name %></p>
+                <p>Description<br><%= team.description %></p>
+              <% end %>
+            </div>
+            <% unless team.nil? %>
+              <% if team.member?(current_user) %>
+                <div class="m-sm-3 m-2">
+                  <%= form_with(model: team.user_teams.build) do |f| %>
+                    <div class="mb-2">
+                      <%= f.text_field :name, class: 'form-control', :placeholder => 'username' %>
+                      <%= hidden_field_tag :team_id, team.id %>
+                    </div>
+                    <%= f.submit 'Add', class: 'btn btn-primary w-100' %>
+                  <% end %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+          <div class="col-sm-8">
+            <% unless user.nil? %>
+              <h2>Teams</h2>
+              <%= render 'teams/teams', teams: teams %>
+            <% end %>
+            <% unless team.nil? %>
+              <h2>Members</h2>
+              <%= render 'users/users', users: users, team: team %>
+            <% end %>
+          </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="nav-task" role="tabpanel" aria-labelledby="nav-profile-tab">
+      ...
+    </div>
+  </div>
 </div>

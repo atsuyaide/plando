@@ -10,4 +10,24 @@ class User < ApplicationRecord
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
                     uniqueness: { case_sensitive: false }
   has_secure_password
+  
+  has_many :teams
+  
+  # users -> teams: 所属チーム
+  # has_many :user_teams
+  # has_many :allteams, through: :user_teams, source: :team
+  # 
+  # 機能するけど、今回のアプリケーションでは使わないのでとりあえずコメントアウト
+  # def join_team(team)
+  #   self.user_teams.find_or_create_by(team_id: team.id)
+  # end
+  # 
+  # def withdraw_team(team)
+  #   user_team = self.user_teams.find_by(team_id: team.id)
+  #   user_team.destroy if user_team
+  # end
+  # 
+  # def joinning?(team)
+  #   self.allteams.include?(team)
+  # end
 end

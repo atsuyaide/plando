@@ -12,6 +12,7 @@ class UsersController < ApplicationController
       redirect_to user_path(current_user.id)
     end
     @user = User.find(params[:id])
+    @pagy, @teams = pagy(@user.teams, items: 10)
   end
 
   def new
