@@ -6,10 +6,20 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
   
   get 'signup', to: 'users#new'
-  resources :users, only: [:index, :show, :create]
+  resources :users, only: [:index, :show, :create] do 
+    member do
+      get :about
+      get :tasks
+    end
+  end
   
   # チームは作成と削除が可能
-  resources :teams, only: [:index, :show, :new, :create, :destroy]
+  resources :teams, only: [:index, :show, :new, :create, :destroy] do 
+    member do
+      get :about
+      get :tasks
+    end
+  end
   
   resources :user_teams, only: [:create, :destroy]
   

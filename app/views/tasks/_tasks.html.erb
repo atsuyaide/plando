@@ -1,4 +1,3 @@
-<% if tasks.any? %>
   <table class="table table-striped" style="table-layout:fixed;width:100%;max-width:768px;" align="center">
     <thead>
       <tr>
@@ -9,17 +8,18 @@
       </tr>
     </thead>
     <tbody>
-      <% tasks.each_with_index do |task, idx| %>
-        <tr>
-          <th scope="row"><%= idx + 1 %></th>
-          <td><%= link_to task.title, edit_task_path(task) %></td>
-          <td><%= task.deadline.strftime("%Y-%m-%d %H:%M") %></td>
-          <td><%= task.status %></td>
-        </tr>
+      <% if tasks.any? %>
+        <% tasks.each_with_index do |task, idx| %>
+          <tr>
+            <th scope="row"><%= idx + 1 %></th>
+            <td><%= link_to task.title, edit_task_path(task) %></td>
+            <td><%= task.deadline.nil? ? "" : task.deadline.strftime("%Y-%m-%d %H:%M") %></td>
+            <td><%= task.status %></td>
+          </tr>
+        <% end %>
       <% end %>
     </tbody>
   </table>
   <div class="d-flex justify-content-center">
-    <%== pagy_bootstrap_nav(@pagy_2) %>
+    <%== pagy_bootstrap_nav(@pagy) %>
   </div>
-<% end %>

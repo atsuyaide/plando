@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :require_user_logged_in, only: [:index, :show]
   
   def index
-    @pagy_1, @users = pagy(User.order(id: :desc), items: 10)
+    @pagy, @users = pagy(User.order(id: :desc), items: 10)
   end
 
   def show
@@ -10,9 +10,7 @@ class UsersController < ApplicationController
       flash[:danger] = '他ユーザーのページにはアクセスできません。'
       redirect_to user_path(current_user.id)
     end
-    @user = User.find(params[:id])
-    @pagy_1, @teams = pagy(@user.teams, items: 10)
-    @pagy_2, @tasks = pagy(@user.tasks, items: 10)
+    redirect_to about_user_path(params[:id])
   end
 
   def new
@@ -29,6 +27,16 @@ class UsersController < ApplicationController
       flash.now[:danger] = 'ユーザの登録に失敗しました。'
       render :new
     end
+  end
+  
+  def about
+    @user = User.find(params[:id])
+    @pagy, @teams = pagy(@user.teams, items: 10)
+  end
+  
+  def tasks 
+    @user = User.find(params[:id])
+    @pagy, @tasks = pagy(@user.tasks, items: 10)
   end
   
   private

@@ -1,0 +1,22 @@
+<%= form_with(model: model) do |f| %>
+  <div class="mb-2">
+    <div class="mb-3">
+      <%= f.label :title, "title" %>
+      <%= f.text_field :title, class: "form-control", :placeholder => "Title" %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :content, "Description" %>
+      <%= f.text_area :content, class: "form-control", :placeholder => "Description" %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :deadline, "Deadline" %>
+      <%= f.text_field :deadline, class: "form-control", :placeholder => "YYYY-mm-dd HH:MM" %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :status, "Status" %>
+      <%= f.select :status, [["Not Started", "Not Started"], ["In Progress", "In Progress"], ["Done", "Done"], ["Pendding", "Pendding"]], include_blank: "-", class: "form-control" %>
+    </div>
+    <%= f.hidden_field :team_id, :value => team_id %>
+  </div>
+   <%= f.submit "Add", class: "btn btn-primary w-100" %>
+<% end %>

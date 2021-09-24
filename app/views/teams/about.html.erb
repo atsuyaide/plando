@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-8">
+    <h1><%= @team.name %>'s Page</h1>
+  </div>
+  <div class="col-4 text-center">
+    <% if current_user == @team.user %>
+      <%= link_to "Delete", @team, method: :delete, data: { confirm: "Delete your team?" }, class: 'btn btn-danger rounded-pill py-0' %>
+    <% end %>
+  </div>
+</div>
+<%= render 'layouts/profile_page', user: nil, team: @team, users: @users, teams: nil, tasks: nil %>

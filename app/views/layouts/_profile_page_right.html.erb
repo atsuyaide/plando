@@ -1,0 +1,35 @@
+<%# mypageでの描画内容 %>
+<% unless user.nil? %>
+  <% if current_page?(about_user_path(user)) %>
+    <div class="row">
+     <div class="col-6">
+       <h2>Teams</h2>
+     </div>
+     <div class="col-6">
+       <%= link_to "Build New Team?", new_team_path, class: "btn btn-primary rounded-pill" %>
+     </div>
+    </div>
+    <%= render "teams/teams", teams: teams %>
+  <% end %>
+  <% if current_page?(tasks_user_path(user)) %>
+    <%= render "tasks/tasks", tasks: tasks %>
+  <% end %>
+<% end %>
+  
+<%# teamページでの描画内容 %>
+<% unless team.nil? %>
+  <% if current_page?(about_team_path(team)) %>
+    <div class="row">
+      <div class="col-6">
+        <h2>Members</h2>
+      </div>
+      <div class="col-6">
+        <%= link_to "Build New Team?", new_team_path, class: "btn btn-primary rounded-pill" %>
+      </div>
+    </div>
+<%= render "users/users", users: users, team: team %>  
+  <% end %>
+  <% if current_page?(tasks_team_path(team)) %>
+    <%= render "tasks/tasks", tasks: tasks %>
+  <% end %>
+<% end %>

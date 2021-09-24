@@ -1,90 +1,28 @@
+<ul class="nav nav-tabs mb-3">
+  <% unless user.nil? %>
+    <li class="nav-item"><a href="<%= about_user_path(user) %>" class="nav-link <%= 'active' if current_page?(about_user_path(user)) %>">About  <span class="badge bg-secondary"><%= @count_followings %></span></a></li>
+    <li class="nav-item"><a href="<%= tasks_user_path(user) %>" class="nav-link <%= 'active' if current_page?(tasks_user_path(user)) %>">Tasks  <span class="badge bg-secondary"><%= @count_followers %></span></a></li>
+  <% end %>
+  <% unless team.nil? %>
+    <li class="nav-item"><a href="<%= about_team_path(team) %>" class="nav-link <%= 'active' if current_page?(about_team_path(team)) %>">About  <span class="badge bg-secondary"><%= @count_followings %></span></a></li>
+    <li class="nav-item"><a href="<%= tasks_team_path(team) %>" class="nav-link <%= 'active' if current_page?(tasks_team_path(team)) %>">Tasks  <span class="badge bg-secondary"><%= @count_followers %></span></a></li>
+  <% end %>
+</ul>
 <div class="row">
-  <div class="nav nav-tabs" id="nav-tab" role="tablist">
-    <a class="nav-link active" id="nav-about-tab" data-bs-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-home" aria-selected="true">About</a>
-    <a class="nav-link" id="nav-task-tab" data-bs-toggle="tab" href="#nav-tasks" role="tab" aria-controls="nav-profile" aria-selected="false">Tasks</a>
+  <div class="col-sm-4">
+    <% unless user.nil? %>
+      <%= render "layouts/profile_page_left", user: user, team: nil %>
+    <% end %>
+    <% unless team.nil? %>
+      <%= render "layouts/profile_page_left", user: nil, team: team %>
+    <% end %>
   </div>
-  <div class="tab-content" id="nav-tabContent">
-    <div class="tab-pane fade show active" id="nav-about" role="tabpanel" aria-labelledby="nav-home-tab">
-      <div class="row m-sm-3 p-1">
-          <div class="col-sm-4">
-            <div class="card py-sm-3 pt-sm-1 p-2">
-              <% unless user.nil? %>
-                <p>Name: <%= user.name %></p>
-                <p>E-mail: <%= user.email %></p>
-              <% end %>
-              <% unless team.nil? %>
-                <% puts team.user_teams.build %>
-                <p>Owner: <%= team.user.name %></p>
-                <p>Description<br><%= team.description %></p>
-              <% end %>
-            </div>
-            <% unless team.nil? %>
-              <% if team.member?(current_user) %>
-                <div class="m-sm-3 m-2">
-                  <%= form_with(model: team.user_teams.build) do |f| %>
-                    <div class="mb-2">
-                      <%= f.text_field :name, class: "form-control", :placeholder => "username" %>
-                      <%= hidden_field_tag :team_id, team.id %>
-                    </div>
-                    <%= f.submit "Add", class: "btn btn-primary w-100" %>
-                  <% end %>
-                </div>
-              <% end %>
-            <% end %>
-          </div>
-          <div class="col-sm-8 mt-1">
-            <% unless user.nil? %>
-              <div class="row">
-                <div class="col-6">
-                  <h2>Teams</h2>
-                </div>
-                <div class="col-6">
-                  <%= link_to "Build New Team?", new_team_path, class: "btn btn-primary rounded-pill" %>
-                </div>
-              </div>
-              <%= render "teams/teams", teams: teams %>
-            <% end %>
-            <% unless team.nil? %>
-              <div class="row">
-                <div class="col-6">
-                  <h2>Members</h2>
-                </div>
-                <div class="col-6">
-                  <%= link_to "Build New Team?", new_team_path, class: "btn btn-primary rounded-pill" %>
-                </div>
-              </div>
-              <%= render "users/users", users: users, team: team %>
-            <% end %>
-          </div>
-      </div>
-    </div>
-    <div class="tab-pane fade" id="nav-tasks" role="tabpanel" aria-labelledby="nav-profile-tab">
-      <div class="row m-sm-3 p-1">
-        <div class="col-sm-4">
-          <% model = user.nil? ? team.tasks.build : user.tasks.build %>
-          <%= form_with(model: model) do |f| %>
-            <div class="mb-2">
-              <div class="mb-3">
-                <%= f.label :title, "title" %>
-                <%= f.text_field :title, class: "form-control", :placeholder => "Title" %>
-              </div>
-              <div class="mb-3">
-                <%= f.label :content, "Description" %>
-                <%= f.text_area :content, class: "form-control", :placeholder => "Description" %>
-              </div>
-              <div class="mb-3">
-                <%= f.label :deadline, "Deadline" %>
-                <%= f.text_field :deadline, class: "form-control", :placeholder => "yyyy-mm-dd HH:MM" %>
-              </div>
-              <%= hidden_field_tag :team_id, team.nil? ? nil : team.id %>
-            </div>
-             <%= f.submit "Add", class: "btn btn-primary w-100" %>
-          <% end %>
-        </div>
-        <div class="col-sm-8">
-          <%= render "tasks/tasks", tasks: @tasks %>
-        </div>
-      </div>
-    </div>
+  <div class="col-sm-8">
+    <% unless user.nil? %>
+      <%= render "layouts/profile_page_right", user: user, team: nil, users: nil, teams: teams, tasks: tasks %>
+    <% end %>
+    <% unless team.nil? %>
+      <%= render "layouts/profile_page_right", user: nil, team: team, users: users, teams: nil, tasks: tasks %>
+    <% end %>
   </div>
 </div>
