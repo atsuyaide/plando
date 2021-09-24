@@ -39,7 +39,13 @@ class TeamsController < ApplicationController
   
   def tasks
     @team = Team.find(params[:id])
-    @pagy, @tasks = pagy(@team.tasks, items: 10)
+    # チームメンバー以外taskページにアクセスできない
+    if @team.member?(current_user)
+      @pagy, @tasks = pagy(@team.tasks, items: 10)
+    else
+      flash[:danger] = 'taskページにはアクセスできません。'
+      redirect_to @team
+    end
   end
   
   private

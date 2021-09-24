@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-N = 11
+N = 50
 M = 50
 K = 100
 L = 1000 
@@ -41,7 +41,11 @@ status_list = ['Not Started', 'In Progress', 'Done', 'Pendding']
 # タスクを適当に追加
 (1..L).each do |num|
   user = User.find(rand(1..N))
-  id = rand(2) == 1 ? nil : Team.find(rand(1..M)).id
+  team = rand(2) == 1 ? nil : Team.find(rand(1..M))
+  unless team.nil?
+    team.add_member(user)
+    id = team.id
+  end
 
   task = user.tasks.build(
     title: 'sample task #' + num.to_s,

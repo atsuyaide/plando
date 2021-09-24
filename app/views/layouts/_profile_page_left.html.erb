@@ -16,16 +16,16 @@
     <p>Owner: <%= team.name %></p>
     <p>Description<br><%= team.description %></p>
     <% if team.member?(current_user) %>
-    <div class="m-sm-3 m-2">
-      <%= form_with(model: team.user_teams.build) do |f| %>
-        <div class="mb-2">
-          <%= f.text_field :name, class: "form-control", :placeholder => "username" %>
-          <%= hidden_field_tag :team_id, team.id %>
-        </div>
-        <%= f.submit "Add", class: "btn btn-primary w-100" %>
-      <% end %>
-    </div>
-<% end %>
+      <div class="m-sm-3 m-2">
+        <%= form_with(model: team.user_teams.build) do |f| %>
+          <div class="mb-2">
+            <%= f.text_field :name, class: "form-control", :placeholder => "username" %>
+            <%= hidden_field_tag :team_id, team.id %>
+          </div>
+          <%= f.submit "Add", class: "btn btn-primary w-100" %>
+        <% end %>
+      </div>
+    <% end %>
   <% end %>
   <% if current_page?(tasks_team_path(team)) %>
     <%= render "tasks/form", model: team.tasks.build, team_id: team.id %>

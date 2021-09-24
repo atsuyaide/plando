@@ -5,7 +5,9 @@
   <% end %>
   <% unless team.nil? %>
     <li class="nav-item"><a href="<%= about_team_path(team) %>" class="nav-link <%= 'active' if current_page?(about_team_path(team)) %>">About  <span class="badge bg-secondary"><%= @count_followings %></span></a></li>
-    <li class="nav-item"><a href="<%= tasks_team_path(team) %>" class="nav-link <%= 'active' if current_page?(tasks_team_path(team)) %>">Tasks  <span class="badge bg-secondary"><%= @count_followers %></span></a></li>
+    <% if team.member?(current_user) %>
+      <li class="nav-item"><a href="<%= tasks_team_path(team) %>" class="nav-link <%= 'active' if current_page?(tasks_team_path(team)) %>">Tasks  <span class="badge bg-secondary"><%= @count_followers %></span></a></li>
+    <% end %>
   <% end %>
 </ul>
 <div class="row">

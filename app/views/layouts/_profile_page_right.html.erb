@@ -27,7 +27,7 @@
         <%= link_to "Build New Team?", new_team_path, class: "btn btn-primary rounded-pill" %>
       </div>
     </div>
-<%= render "users/users", users: users, team: team %>  
+    <%= render "users/users", users: users, team: team %>  
   <% end %>
   <% if current_page?(tasks_team_path(team)) %>
     <%= render "tasks/tasks", tasks: tasks %>

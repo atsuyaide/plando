@@ -31,7 +31,7 @@ class UsersController < ApplicationController
   
   def about
     @user = User.find(params[:id])
-    @pagy, @teams = pagy(@user.teams, items: 10)
+    @pagy, @teams = pagy(@user.allteams, items: 10)
   end
   
   def tasks 
