@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_21_162626) do
+ActiveRecord::Schema.define(version: 2021_09_23_134234) do
+
+  create_table "tasks", charset: "utf8mb4", force: :cascade do |t|
+    t.string "title"
+    t.string "content"
+    t.datetime "deadline"
+    t.string "status"
+    t.bigint "user_id", null: false
+    t.bigint "team_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_id"], name: "index_tasks_on_team_id"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
+  end
 
   create_table "teams", charset: "utf8mb4", force: :cascade do |t|
     t.string "name"
@@ -39,6 +52,8 @@ ActiveRecord::Schema.define(version: 2021_09_21_162626) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "tasks", "teams"
+  add_foreign_key "tasks", "users"
   add_foreign_key "teams", "users"
   add_foreign_key "user_teams", "teams"
   add_foreign_key "user_teams", "users"

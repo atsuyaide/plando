@@ -1,0 +1,36 @@
+
+<div class="text-center">
+  <h1>Edit</h1>
+</div>
+
+<div class="row">
+  <div class="col-sm-6 offset-sm-3">
+    <%= form_with(model: @task) do |f| %>
+      <div class="mb-2">
+        <div class="mb-3">
+          <%= f.label :title, "title" %>
+          <%= f.text_field :title, class: "form-control", :value => @task.title %>
+        </div>
+        <div class="mb-3">
+          <%= f.label :content, "Description" %>
+          <%= f.text_area :content, class: "form-control", :value => @task.content %>
+        </div>
+        <div class="mb-3">
+          <%= f.label :deadline, "Deadline" %>
+          <%= f.text_field :deadline, class: "form-control", :value => @task.deadline.nil? ? '' : @task.deadline.strftime("%Y-%m-%d %H:%M"), :placeholder => "YYYY-mm-dd HH:MM" %>
+        </div>
+        <div class="mb-3">
+          <%= f.label :status, "Status" %>
+          <%= f.select :status, [["Not Started", "Not Started"], ["In Progress", "In Progress"], ["Done", "Done"], ["Pendding", "Pendding"]], include_blank: "-", class: "form-control" %>
+        </div>
+        <%= f.hidden_field :team_id, :value => @task.team_id %>
+      </div>
+       <%= f.submit "Update", class: "btn btn-primary w-100" %>
+    <% end %>
+  <% if @task.team_id.nil? %>
+    <%= link_to 'Back', tasks_user_path(@task.user_id) %>
+  <% else %>
+    <%= link_to 'Back', tasks_team_path(@task.team_id) %>
+  <% end %>
+  </div>
+</div>

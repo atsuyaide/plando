@@ -1,4 +1,3 @@
-<% if users.any? %>
   <table class="table table-striped" style="table-layout:fixed;width:100%;max-width:768px;" align="center">
     <thead>
       <tr>
@@ -9,33 +8,34 @@
       </tr>
     </thead>
     <tbody>
-      <% users.each_with_index do |user, idx| %>
-        <tr>
-          <th scope="row"><%= idx + 1 %></th>
-          <% if current_user.id == user.id %>
-            <td><%= link_to user.name, user_path(user) %></td>
-          <% else %>
-            <td><%= user.name %></td>
-          <% end %>
-          <td><%= user.email %></td>
-          <td class="text-center">
-            <% unless team.nil? %>
-              <% if team.members.include?(current_user) %>
-                <% unless user == team.user %>
-                  <%= form_with(model: team.user_teams.find_by(user_id: user.id), method: :delete) do |f| %>
-                    <%= hidden_field_tag :user_id, user.id %>
-                    <%= hidden_field_tag :team_id, team.id %>
-                    <%= f.submit 'Remove', class: 'btn btn-danger rounded-pill py-0', data: { confirm: "You sure?" } %>
+      <% if users.any? %>
+        <% users.each_with_index do |user, idx| %>
+          <tr>
+            <th scope="row"><%= idx + 1 %></th>
+            <% if current_user.id == user.id %>
+              <td><%= link_to user.name, user_path(user) %></td>
+            <% else %>
+              <td><%= user.name %></td>
+            <% end %>
+            <td><%= user.email %></td>
+            <td class="text-center">
+              <% unless team.nil? %>
+                <% if team.members.include?(current_user) %>
+                  <% unless user == team.user %>
+                    <%= form_with(model: team.user_teams.find_by(user_id: user.id), method: :delete) do |f| %>
+                      <%= hidden_field_tag :user_id, user.id %>
+                      <%= hidden_field_tag :team_id, team.id %>
+                      <%= f.submit 'Remove', class: 'btn btn-danger rounded-pill py-0', data: { confirm: "You sure?" } %>
+                    <% end %>
                   <% end %>
                 <% end %>
               <% end %>
-            <% end %>
-          </td>
-        </tr>
+            </td>
+          </tr>
+        <% end %>
       <% end %>
     </tbody>
   </table>
   <div class="d-flex justify-content-center">
     <%== pagy_bootstrap_nav(@pagy) %>
   </div>
-<% end %>

@@ -1,0 +1,27 @@
+  <table class="table table-striped" style="table-layout:fixed;width:100%;max-width:768px;" align="center">
+    <thead>
+      <tr>
+        <th style="width: 5%" scope="col">#</th>
+        <th style="width: 35%" scope="col">Title</th>
+        <th style="width: 20%" scope="col">Created by</th>
+        <th style="width: 20%" scope="col">Deadline</th>
+        <th style="width: 20%" scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if tasks.any? %>
+        <% tasks.each_with_index do |task, idx| %>
+          <tr>
+            <th scope="row"><%= idx + 1 %></th>
+            <td><%= link_to task.title, edit_task_path(task) %></td>
+            <td><%= User.find(task.user_id).name %></td>
+            <td><%= task.deadline.nil? ? "" : task.deadline.strftime("%Y-%m-%d %H:%M") %></td>
+            <td><%= task.status %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-center">
+    <%== pagy_bootstrap_nav(@pagy) %>
+  </div>

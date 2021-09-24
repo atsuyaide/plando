@@ -6,8 +6,7 @@ class TeamsController < ApplicationController
   end
   
   def show
-    @team = Team.find(params[:id])
-    @pagy, @users = pagy(@team.members, items: 10)
+    redirect_to about_team_path
   end
   
   def new
@@ -32,7 +31,23 @@ class TeamsController < ApplicationController
     flash[:success] = 'チームを削除しました。'
     redirect_to teams_path
   end
-
+  
+  def about
+    @team = Team.find(params[:id])
+    @pagy, @users = pagy(@team.members, items: 10)
+  end
+  
+  def tasks
+    @team = Team.find(params[:id])
+    # チームメンバー以外taskページにアクセスできない
+    if @team.member?(current_user)
+      @pagy, @tasks = pagy(@team.tasks, items: 10)
+    else
+      flash[:danger] = 'taskページにはアクセスできません。'
+      redirect_to @team
+    end
+  end
+  
   private
 
   def team_params

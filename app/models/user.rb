@@ -12,10 +12,11 @@ class User < ApplicationRecord
   has_secure_password
   
   has_many :teams
+  has_many :tasks
   
   # users -> teams: 所属チーム
-  # has_many :user_teams
-  # has_many :allteams, through: :user_teams, source: :team
+  has_many :user_teams
+  has_many :allteams, through: :user_teams, source: :team, dependent: :destroy
   # 
   # 機能するけど、今回のアプリケーションでは使わないのでとりあえずコメントアウト
   # def join_team(team)
