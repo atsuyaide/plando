@@ -23,5 +23,5 @@ Rails.application.routes.draw do
   
   resources :user_teams, only: [:create, :destroy]
   
-  resources :tasks, only: [:edit, :create]
+  resources :tasks, only: [:show, :update, :edit, :create]
 end

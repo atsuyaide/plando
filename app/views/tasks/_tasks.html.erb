@@ -2,9 +2,10 @@
     <thead>
       <tr>
         <th style="width: 5%" scope="col">#</th>
-        <th style="width: 35%" scope="col">Title</th>
-        <th style="width: 35%" scope="col">Deadline</th>
-        <th style="width: 25%" scope="col">Status</th>
+        <th style="width: 25%" scope="col">Title</th>
+        <th style="width: 20%" scope="col">Created by</th>
+        <th style="width: 20%" scope="col">Deadline</th>
+        <th style="width: 20%" scope="col">Status</th>
       </tr>
     </thead>
     <tbody>
@@ -13,6 +14,7 @@
           <tr>
             <th scope="row"><%= idx + 1 %></th>
             <td><%= link_to task.title, edit_task_path(task) %></td>
+            <td><%= User.find(task.user_id).name %></td>
             <td><%= task.deadline.nil? ? "" : task.deadline.strftime("%Y-%m-%d %H:%M") %></td>
             <td><%= task.status %></td>
           </tr>

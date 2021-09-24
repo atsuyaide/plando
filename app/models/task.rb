@@ -8,6 +8,7 @@ class Task < ApplicationRecord
   }
   # 期限は現在時刻よりも後のみ指定可能
   validates_datetime :deadline, after: Time.now
+  validates :deadline, presence: true, timeliness: {type: :datetime}
   
   belongs_to :user
   belongs_to :team, optional: true
