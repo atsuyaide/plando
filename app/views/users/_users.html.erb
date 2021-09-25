@@ -1,4 +1,4 @@
-  <table class="table table-striped" style="table-layout:fixed;width:100%;max-width:768px;" align="center">
+  <table class="table table-striped" style="table-layout:fixed;width:100%;max-width:768px;">
     <thead>
       <tr>
         <th style="width: 5%" scope="col">#</th>
@@ -23,8 +23,8 @@
                 <% if team.members.include?(current_user) %>
                   <% unless user == team.user %>
                     <%= form_with(model: team.user_teams.find_by(user_id: user.id), method: :delete) do |f| %>
-                      <%= hidden_field_tag :user_id, user.id %>
-                      <%= hidden_field_tag :team_id, team.id %>
+                      <%= hidden_field_tag :user_id, user.id, :id => 'user_' + idx.to_s %>
+                      <%= hidden_field_tag :team_id, team.id, :id => 'team_' + idx.to_s %>
                       <%= f.submit 'Remove', class: 'btn btn-danger rounded-pill py-0', data: { confirm: "You sure?" } %>
                     <% end %>
                   <% end %>
