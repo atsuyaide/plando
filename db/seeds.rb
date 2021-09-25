@@ -14,7 +14,7 @@ L = 1000
 # ユーザーを作成
 (1..N).each do |number|
   number_s = number.to_s
-  user = User.new(name: 'user_' + number_s, email: number_s + '@abc.com', password: 'password')
+  user = User.new(name: 'user_' + number_s, email: 'test' + number_s + '@example.com', password: 'password')
   user.save
 end
 print("Generated #{N} users.\n")

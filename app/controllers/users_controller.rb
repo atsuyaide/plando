@@ -1,15 +1,12 @@
 class UsersController < ApplicationController
   before_action :require_user_logged_in, only: [:index, :show]
+  before_action :is_mypage?, only: [:show, :about, :tasks]
   
   def index
     @pagy, @users = pagy(User.order(id: :desc), items: 10)
   end
 
   def show
-    unless current_user.id.to_s == params[:id]
-      flash[:danger] = '他ユーザーのページにはアクセスできません。'
-      redirect_to user_path(current_user.id)
-    end
     redirect_to about_user_path(params[:id])
   end
 
@@ -43,6 +40,14 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+  
+  def is_mypage?
+    user = User.find(params[:id])
+    unless current_user.id == user.id
+      flash[:danger] = '他ユーザーのページにはアクセスできません。'
+      redirect_to user_path(current_user.id)
+    end
   end
 
 end
