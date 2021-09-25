@@ -4,7 +4,7 @@ class TasksController < ApplicationController
   
   def create
     @task = current_user.tasks.build(task_params)
-    if current_user.teams.ids.include?(@task.team_id)
+    if current_user.allteams.ids.include?(@task.team_id)
       if @task.save
         flash[:success] = 'タスクを投稿しました。'
       else
